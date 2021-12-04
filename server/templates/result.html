@@ -1,0 +1,48 @@
+
+<div id="result" style="display: none;">{{result}}</div>
+<head>
+    <title>Search Result</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+</head>
+<script>
+    function parseResult(){
+        ServerResult = document.getElementById("result").innerHTML;
+        ServerResult = window.atob(ServerResult);
+        a = JSON.parse(ServerResult);
+        t = 0;
+        a1 ='<div class="mdui-panel" mdui-panel><div class="mdui-panel-item mdui-panel-item-open"><div class="mdui-panel-item-header">其他结果</div><div class="mdui-panel-item-body"><p>';
+        a2 = '</p></div></div></div>';
+        banner = "";
+        for(var item in a){
+            banner += item+" : "+a[item]+"  ";
+            if(t==0){
+                SubPlayer(item);
+            }
+            t+=1;
+        }
+        document.getElementById("result-banner").innerHTML = a1+banner+a2;
+    }
+
+    function SubPlayer(item){
+        //https://player.bilibili.com/player.html?bvid={bv}&high_quality=1&danmaku=0&t=
+        p = item.split(",")[0].split("-")[1];
+        bv = item.split(",")[0].split("-")[0];
+        if(p==undefined){
+            p = "1";
+            bv = item.split(",")[0];
+        }
+        start_progress = parseInt(item.split(",")[1])*1000;
+        url = "https://player.bilibili.com/player.html?bvid=" + bv +"&p="+p+ "&high_quality=1&danmaku=0&t="+item.split(",")[1];
+        document.getElementById("player").innerHTML = "<iframe src='"+url+"' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>";
+        result = "最准确链接在"+item.split(",")[0] +"(- 后的代表分P数目)的"+item.split(",")[1] + "秒 <a class='mdui-btn mdui-color-pink-100 mdui-ripple' href=https://www.bilibili.com/" + bv +"?p"+p+"&start_progress="+start_progress+">点此跳转主站</a>  <a class='mdui-btn mdui-color-green mdui-ripple' href='/'>再搜一个</a>";
+        document.getElementById("best-result-banner").innerHTML = result;
+    }
+</script>
+
+<body onload="parseResult()">
+    <div id="best-result-banner"></div>
+    <div id="player"></div>
+    <div id="result-banner"></div>
+    
+</body>
