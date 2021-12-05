@@ -1,0 +1,7 @@
+## necessary
+imagehash
+opencv-python
+distance
+
+## for server 
+flask
