@@ -1,65 +1,22 @@
 <head>
     <title>Asdb Search</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            crossorigin="anonymous"></script>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/css/mdui.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
 </head>
 
-<div>
-    <nav class="navbar navbar-dark bg-dark">
-        <!-- Navbar content -->
-        <div class="container-fluid"><a class="navbar-brand" href="#">直播图片搜索</a></div>
-    </nav>
 
-    <div class="container">
-        <div class="alert alert-danger d-flex align-items-center" role="alert" style="margin-top: 0.75rem">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-            </svg>
-            <div style="padding-left: 0.5rem">
-                仅供学习使用，请勿用于商业用途。
-            </div>
-        </div>
 
-        <div style="margin-top: 1rem; margin-bottom: 2rem; text-align: center;">
-            <h1 class="display-4" style="font-weight: bold">A-Soul 直播图片搜索</h1>
-            <h5 class="text-gray-soft text-regular">A-Soul Live Image Search</h5>
-            <div>
-                <a class="btn btn-warning" href="https://github.com/A-Soul-Database/PhotoSearch"
-                   role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-github" viewBox="0 0 16 16">
-                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-                    </svg>
-                    Github
-                </a>
-                <a class="btn btn-success" href="https://asdb.live" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-film" viewBox="0 0 16 16">
-                        <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
-                    </svg>
-                    A-Soul Database
-                </a>
-            </div>
-        </div>
-        <div style="margin-bottom: 2rem; text-align: center;">
-            <img src="https://i.loli.net/2021/12/01/qLroIxYgnQsXPcD.png" class="img-thumbnail img-fluid" alt="">
-        </div>
-        <div style="display:flex; justify-content: center">
-            <form class="row row-cols-lg-auto g-3 align-items-center">
-                <div class="col-12">
-                    <input type="file" class="form-control" accept="image/jpeg,image/jpg,image/png"
-                           name="file" value="选择图片">
-                </div>
 
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">提交查询</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<div style="text-align: center;">
+    <h3>A-Soul 直播图片搜索</h3>
+    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue" href="https://github.com/A-Soul-Database/PhotoSearch">Github</a>
+    <a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-light-green-a200" href="https://asdb.live">A-Soul Database</a><p></p>
+    <form method="POST" action="/search" enctype=multipart/form-data>
+        <input type="file" class="mdui-btn mdui-color-purple-100 mdui-ripple" accept="image/jpeg,image/jpg,image/png" name="file" value="选择图片">
+        <button type="submit" class="mdui-btn mdui-color-pink-100 mdui-ripple">提交查询</button>
+        
+    </form>
+    <img src="https://i.loli.net/2021/12/01/qLroIxYgnQsXPcD.png" alt="">
+    <p>仅供学习使用，请勿用于商业用途。</p>
 </div>
