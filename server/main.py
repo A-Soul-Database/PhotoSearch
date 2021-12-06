@@ -65,11 +65,11 @@ class HashListGen:
     def CaucalateAll(self):
         start_time = time.time()
         videoFormat = ["mp4","flv"]
-        videoList = [fn for fn in os.listdir(os.getcwd())
+        videoList = [fn for fn in os.listdir(os.getcwd()+"/tmp")
             if any(fn.endswith(formats) for formats in videoFormat)
         ]
         for i in videoList:
-            self.SlpitSingleVideo(i)
+            self.SlpitSingleVideo("tmp/"+i)
         print(time.time()-start_time)
 
 
@@ -99,7 +99,8 @@ class HashListGen:
                     #cv2.imwrite(frame_name, frame)
                     #转换当前帧为PIL格式
                     hash = imagehash.phash(Image.fromarray(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)),hash_size=Config["Hash_Size"]).__str__()
-                    result[hash] = f"{path.split('.')[0]},{frame_count/intervel}"
+                    vidBv = path.split('.')[0].replace("/tmp","").split(".")[0]
+                    result[hash] = f"{vidBv},{frame_count/intervel}"
             else:
                 print("Caped")
                 break
