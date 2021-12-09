@@ -99,8 +99,8 @@ class HashListGen:
                     #cv2.imwrite(frame_name, frame)
                     #转换当前帧为PIL格式
                     hash = imagehash.phash(Image.fromarray(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)),hash_size=Config["Hash_Size"]).__str__()
-                    vidBv = path.split('.')[0].replace("/tmp","").split(".")[0]
-                    result[hash] = f"{vidBv},{frame_count/intervel}"
+                    Bv = path.split('.')[0].replace("tmp","").replace("/","")
+                    result[hash] = f"{Bv},{frame_count/intervel}"
             else:
                 print("Caped")
                 break
