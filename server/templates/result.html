@@ -39,6 +39,10 @@
         result = "最准确链接在"+item.split(",")[0] +"(- 后的代表分P数目)的"+item.split(",")[1] + "秒<br> 由于B站外链播放器版本较旧。移动端建议跳转主站以获得更好的体验 <br><a class='mdui-btn mdui-color-pink-100 mdui-ripple' href=https://www.bilibili.com/" + bv +"?p="+p+"&start_progress="+start_progress+">点此跳转主站</a>  <a class='mdui-btn mdui-color-green mdui-ripple' href='/'>再搜一个</a>";
         document.getElementById("best-result-banner").innerHTML = result;
     }
+
+    function GetScreenShot(bv,time){
+        Vid_url = "https://api.bilibili.com/x/player/videoshot?cid=112920762&bvid=BV1W4411r7mL&jsonp=jsonp&index=1"
+    }
 </script>
 
 <body onload="parseResult()">

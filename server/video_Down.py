@@ -52,7 +52,7 @@ class down:
                 self.p.remove(i)
             else:
                 infos["p"].append([i, Bili_Video_Info_Json["data"]["pages"][int(i)-1]["cid"], Bili_Video_Info_Json["data"]["pages"][int(i)-1]["part"] ])
-            #Asdb 特有:去除带有 【弹幕】 的所有分P
+            #####Asdb 特有:去除带有 【弹幕】 的所有分P
         return infos
 
     def Video_Download(self,infos:dict)->bool:

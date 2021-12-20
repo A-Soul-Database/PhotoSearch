@@ -24,7 +24,7 @@ LASTUPDATE = ""
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',Last_Update_Info=LASTUPDATE)
 
 
 @app.route('/search', methods=['POST'])
@@ -52,15 +52,16 @@ def CheckUpdate():
     return LASTUPDATE,200
 
 def addItemBackGround(bv)->bool:
+    global LASTUPDATE
     Status = video_Down.down(bv)
     if Status:
         main.HashListGen().CaucalateAll()
         os.remove(f"{app.config['UPLOAD_FOLDER']}/{bv}.mp4")
         shutil.copy(os.getcwd()+"/alphas",os.getcwd()+"../"+"alphas")
+        LASTUPDATE = f"Trigger {bv} Success \n {time.ctime()}"
         repo = Repo(os.getcwd()+"../")
         repo.commit(f"add new video {bv} By Server Trigger")
         repo.remote().push()
-        LASTUPDATE = f"Trigger {bv} Success \n {time.ctime()}"
     return "ok"
 
 if __name__ == '__main__':
