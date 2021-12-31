@@ -16,6 +16,8 @@ from contextlib import closing
 import logging
 import time
 import os
+
+from requests.sessions import should_bypass_proxies
 class down:
 
     headers = {
