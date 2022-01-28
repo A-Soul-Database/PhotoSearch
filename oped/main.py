@@ -12,27 +12,9 @@ Config = {
     "Hash_Size":12,
     "Search_Distance":25,
     "Confidence_Distance":10,
+    "Ending_Distances":10,
 }
 
-
-def splitDict(m:dict,clips:int)->list:
-    """
-    将字典按片段分割
-    :param m:
-    :return:
-    """
-    new_list = []
-    dict_len = len(m)
-    # 获取分组数
-    while_count = dict_len // clips + 1 if dict_len % clips != 0 else dict_len / clips
-    split_start = 0
-    split_end = clips
-    while(while_count > 0):
-        new_list.append({k: m[k] for k in list(m.keys())[split_start:split_end]})
-        split_start += clips
-        split_end += clips
-        while_count -= 1
-    return new_list
 
 class Search:
 
@@ -83,46 +65,35 @@ class oped(Search):
         frame_count = 0
         intervel = int(cap.get(cv2.CAP_PROP_FPS))
         start_time = time.time()
-        returns = {"op":[],"ed":[]}
+        returns = {"op":[-1,0],"ed":[0,0],"absolute":0}
         print("Start Recognize")
         while cap.isOpened():
             ret, frame = cap.read()
             if ret:
                 frame_count += 1
                 if frame_count % intervel == 0:
-                    #符合条件的帧保存
-                    #frame_name = os.path.join(os.path.dirname(path),
-                    #                          os.path.basename(path).split('.')[0] + '-' + str(frame_count) + '.jpg')
-                    #cv2.imwrite(frame_name, frame)
-                    #转换当前帧为PIL格式
-                    """写的很烂 能用就行"""
                     result = Search().ultraSearch(image=Image.fromarray(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)),type="img")
+                    sec = int(frame_count/int(cap.get(cv2.CAP_PROP_FPS)))
                     if len(result) != 0:
-                        if  len(returns["op"]) == 0 or len(returns["ed"]) == 0:
                             #记录oped的出现时间
-                            for i in result.keys():
-                                i = i.split(",")
-                                for n in i:
-                                    if n == "op":
-                                        returns["op"].append(int(frame_count/int(cap.get(cv2.CAP_PROP_FPS))))
-                                    elif n == "ed":
-                                        returns["ed"].append(int(frame_count/int(cap.get(cv2.CAP_PROP_FPS))))
-                        else:
-                            for i in result.keys():
-                                i = i.split(",")
-                                for n in i:
-                                    if n == "op":
-                                        del returns["op"][1]
-                                        returns["op"].append(int(frame_count/int(cap.get(cv2.CAP_PROP_FPS))))
-                                    elif n == "ed":
-                                        del returns["ed"][1]
-                                        returns["ed"].append(int(frame_count/int(cap.get(cv2.CAP_PROP_FPS))))
+                        for i in result.keys():
+                            i = i.split(",")
+                            for n in i:
+                                if n == "op":
+                                    if returns["op"][0] == -1:
+                                        returns["op"][0] = sec
+                                    else:
+                                        if sec - returns["op"][1] < Config["Ending_Distances"]:
+                                            returns["op"][1] = sec
+                                elif n == "ed":
+                                    if returns["ed"][0] == 0:
+                                        returns["ed"][0] = sec
+                                    else:
+                                        returns["ed"][1] = sec
             else:
-                print("Caped")
                 break
-        #print(sys.getsizeof(result)
-        """时间好像不是很准确"""
         cap.release()
+        returns["absolute"] = returns["op"][1] - returns["ed"][0]
         print(time.time()-start_time)
         return returns
 
@@ -137,75 +108,8 @@ class oped(Search):
         """
         pass
 
-#ApproxSearch()
-#ApproxSearch()
-
 
 if __name__ == "__main__":
-    import sys
-    print("""
-        Asdb Detections
-            Useage:
-                -c: Check OP/ED
-                -t: Check Timeline
-                -o: get offset
-    """)
-    if "-c" in sys.argv:
-        print("Check OP/ED")
-        name = input("Input the video path: \n")
-        result = oped().WhereStarted(name)
-        print(result)
-    if "-o" in sys.argv:
-        print("Check Timeline")
-        VidA = input("Input the video A path: \n")
-        VidB = input("Input the video B path: \n")
-        #DicA = {'op': [1, 1, 2, 2, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 15, 16, 16], 'ed': [2969, 2979, 2979, 2979, 2979, 2979, 2979, 2979, 2979, 2979, 2980, 2980]}
-        #DicB = {'op': [1, 1, 2, 2, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 9, 9, 10, 10, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 15, 16, 16,17], 'ed': [2969, 2979, 2979, 2979, 2979, 2979, 2979, 2979, 2979, 2979, 2980, 2980]}
-        OffsetA = oped().WhereStarted(VidA)
-        OffsetB = oped().WhereStarted(VidB)
-        try:
-            OffsetA = OffsetA["op"][-1]
-            OffsetB = OffsetB["op"][-1]
-            offset = OffsetA - OffsetB
-        except:
-            #用ed校对
-            OffsetA = OffsetA["ed"][0]
-            OffsetB = OffsetB["ed"][0]
-            offset = OffsetA - OffsetB
-
-        print(f"OffsetA is {OffsetA}\n OffsetB is {OffsetB}\n Offset is {offset}")
-        cap = cv2.VideoCapture(VidA)
-        videoTime = cap.get(7)/cap.get(5) + offset
-        cap.release()
-        print(f"Single Offset (A is faster than B) is {offset}, Video Offset is {videoTime}")
-
-    if "-t" in sys.argv:
-        import re
-        TimeLineA = input("Input the timeline A path: \n")        
-        offset = input("Input the offset: default=0 \n")
-        TimeLineA = open(TimeLineA,"r",encoding="utf-8").read().split("\n")
-        def to_hour(time,offset):
-            """秒转换为小时"""
-            alltime = 0
-            time = time.split(":")
-            time.reverse()
-            for t in range(len(time)):
-                alltime+=int(time[t])*60*t
-            alltime-=offset
-            #转换秒为小时:分:秒
-            return f"{int(alltime/3600)}:{'0'+str(int(alltime%3600/60)) if int(alltime%3600/60)<10 else int(alltime%3600/60)}:{'0'+str(int(alltime%60)) if int(alltime%60)<10 else int(alltime%60)}"
-        # 时间轴分割成秒
-        newline = []
-        timecheck = [r'[0-9]*:[0-9]*',r'[0-9]*:[0-9]*:[0-9]*']
-        for i in TimeLineA:
-            i = i.replace('：',':')
-            for reg in timecheck:
-                try:
-                    times = re.findall(reg,i)[0]
-                    content = re.sub(reg,"",i)
-                    newline.append(f"{to_hour(times,offset)}\t{content}")
-                except:
-                    #错误就先不管了
-                    pass
-        open("B.txt","w",encoding="utf-8").write("\n".join(newline))
-    #HashListGen().CaucalateAll()
+    name = input("Input the video path: \n")
+    result = oped().WhereStarted(name)
+    print(result)
