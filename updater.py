@@ -2,6 +2,7 @@ import json
 import requests
 import main
 import os
+import time
 
 Remote_Indexer = []
 for i in requests.get("https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/main.json").json()["LiveClip"]:
@@ -22,3 +23,10 @@ for item in Need_To_Update:
         Video = os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps}")
 
 main.HashListGen().CaucalateAll()
+
+env_file = os.getenv('GITHUB_ENV')
+times = time.time()
+with open(env_file, "a") as f:
+    f.write(f"Version={times}")
+    f.write("\n")
+    f.write(f"Tags={times}")
