@@ -16,8 +16,8 @@ Saved_Indexer = json.loads(open("indexer.json","r").read())
 Need_To_Update = [fn for fn in Remote_Indexer if fn not in Saved_Indexer]
 
 # Download Latest Released Aplhas
-
-with closing(requests.get("https://api.github.com/repos/A-Soul-Database/PhotoSearch/releases/latest").json()["assets"][0]["browser_download_url"]) as r:
+Latest_Release =  requests.get("https://api.github.com/repos/A-Soul-Database/PhotoSearch/releases/latest").json()["assets"][0]["browser_download_url"]
+with closing(requests.get(Latest_Release)) as r:
     chunk_size = 10240
     with open("Alphas.zip","wb") as f:
         for chunk in r.iter_content(chunk_size=chunk_size):
