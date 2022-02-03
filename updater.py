@@ -45,7 +45,7 @@ for item in Need_To_Update:
         name = item if len(items) == 1 else f"{item}-{ps}"
         Video = os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps}")
 
-#main.HashListGen().CaucalateAll()
+main.HashListGen().CaucalateAll()
 
 # Create Release
 
