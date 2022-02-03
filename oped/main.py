@@ -33,7 +33,7 @@ class Search:
             to_search_hash = imagehash.phash(Image.open(f'{image}'),hash_size=Config["Hash_Size"]).__str__()
         elif type == "img":
             to_search_hash = imagehash.phash(image,hash_size=Config["Hash_Size"]).__str__()
-        hashinfo = json.loads(open(f"alphas/{to_search_hash[:1]}.json","r").read())
+        hashinfo = json.loads(open(f"opeds/{to_search_hash[:1]}.json","r").read())
         #hashinfo = json.loads(open(f"./All.json","r").read())
         
         for i in hashinfo:

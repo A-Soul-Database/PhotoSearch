@@ -1,8 +1,6 @@
 """
 利用cv每隔一定时间截取一帧并保存
 """
-from threading import Thread
-import threading
 import cv2
 import time
 import imagehash
@@ -41,27 +39,6 @@ def splitDict(m:dict,clips:int)->list:
 
 class Search:
 
-    def ApproxSearch(self):
-        """
-        已经弃用
-        模糊搜索 搜索置信度最大的返回 若达到预设的置信度也返回"""
-        start_time = time.time()
-        hashinfo = json.loads(open("./All.json","r").read())
-        to_search_hash = imagehash.phash(Image.open('12.png'),hash_size=Config["Hash_Size"]).__str__()
-        result = {}
-        maximumR = ""
-        nearestDis = -1
-        for i in hashinfo:
-            distancse = int(distance.hamming(to_search_hash,i))
-            if distancse < nearestDis or nearestDis == -1:
-                nearestDis = distancse
-                if nearestDis < Config["Search_Distance"]:
-                    result[hashinfo[i]]=f"Confidences: {round(1-distancse/len(to_search_hash),2)}"
-                    break
-                maximumR = hashinfo[i] + f" Confidences: {round(1-nearestDis/len(to_search_hash),2)}"
-        print(f"最大准确度：{maximumR},在允许置信度下的结果：{result}")
-        print("--- %s seconds ---" % (time.time() - start_time))
-
     def ultraSearch(self,image:str):
         """
         优化处: 
@@ -72,30 +49,6 @@ class Search:
         result = {}
         to_search_hash = imagehash.phash(Image.open(f'{image}'),hash_size=Config["Hash_Size"]).__str__()
         hashinfo = json.loads(open(f"alphas/{to_search_hash[:1]}.json","r").read())
-        #hashinfo = json.loads(open(f"./All.json","r").read())
-        """
-        threadLists = []
-        threadNum = 2
-        def s(hashinfo:dict):
-            for i in hashinfo:
-                re = {}
-                distancse = int(distance.hamming(to_search_hash,i))
-                if distancse < Config["Search_Distance"]:
-                    #result[hashinfo[i]]=f"Confidences: {round(1-distancse/len(to_search_hash),2)}"
-                    re.update({hashinfo[i]:f"Confidences: {round(1-distancse/len(to_search_hash),2)}" })
-            result.update(re)
-
-        dicts = splitDict(hashinfo,len(hashinfo)//threadNum)
-        for n in range(threadNum):
-            t = Thread(target=s,kwargs={"hashinfo":dicts[n]})
-            threadLists.append(t)
-        
-        for t in threadLists:
-            t.setDaemon(True)
-            t.start()
-        for t in threadLists:
-            t.join()
-        """
         for i in hashinfo:
             distancse = int(distance.hamming(to_search_hash,i))
             if distancse < Config["Search_Distance"]:
@@ -141,11 +94,6 @@ class HashListGen:
             if ret:
                 frame_count += 1
                 if frame_count % intervel == 0:
-                    #符合条件的帧保存
-                    #frame_name = os.path.join(os.path.dirname(path),
-                    #                          os.path.basename(path).split('.')[0] + '-' + str(frame_count) + '.jpg')
-                    #cv2.imwrite(frame_name, frame)
-                    #转换当前帧为PIL格式
                     hash = imagehash.phash(Image.fromarray(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)),hash_size=Config["Hash_Size"]).__str__()
                     result[hash] = f"{path.split('.')[0]},{frame_count/intervel}"
             else:
@@ -183,9 +131,6 @@ class HashListGen:
             thisdic = dict(thisdic)
             handle.write(str(thisdic).replace("'",'"'))
             handle.close()
-#ApproxSearch()
-#ApproxSearch()
-
 
 if __name__ == "__main__":
     import argparse
