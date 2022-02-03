@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
+import sys
+sys.path.append("../")
 import main
 import os
 import base64
-import video_Down
 from threading import Thread
 import time
 import shutil
@@ -52,16 +53,9 @@ def CheckUpdate():
     return LASTUPDATE,200
 
 def addItemBackGround(bv)->bool:
+    """Departed"""
     global LASTUPDATE
-    Status = video_Down.down(bv)
-    if Status:
-        main.HashListGen().CaucalateAll()
-        os.remove(f"{app.config['UPLOAD_FOLDER']}/{bv}.mp4")
-        shutil.copy(os.getcwd()+"/alphas",os.getcwd()+"../"+"alphas")
-        LASTUPDATE = f"Trigger {bv} Success \n {time.ctime()}"
-        repo = Repo(os.getcwd()+"../")
-        repo.commit(f"add new video {bv} By Server Trigger")
-        repo.remote().push()
+    os.system("you-get -o tmp --playlist-start 1 --playlist-end 1 --playlist-reverse --format best https://www.bilibili.com/video/"+bv)
     return "ok"
 
 if __name__ == '__main__':
