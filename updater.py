@@ -35,7 +35,7 @@ Alphas.extractall("./")
 
 def getPs(bv):
     r = requests.get("https://api.bilibili.com/x/web-interface/view?bvid="+bv,headers=header).json()
-    if r["code"] = -404:
+    if r["code"] == -404:
         return []
     return [fn+1 for fn in range(len(r["data"]["pages"])) if "弹幕" not in r["data"]["pages"][fn]["part"]]
 
