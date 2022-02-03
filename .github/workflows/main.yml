@@ -1,0 +1,57 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Run Daily Check
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+          
+      - name: Install Python
+        uses: actions/setup-python@v2.3.1
+        
+      - name: Install Dependiences
+        run: pip install requests imagehash opencv-python distance you-get
+      
+      - name: runScripts
+        run: py updater.py 
+        id: version
+
+      - name: CreateRelease
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: Daily_Alpha_${{ env.Version }}
+          tag_name: ${{ env.Tags }}
+          body: Release ${{ env.Tags }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      
+      - name: UploadAssets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+         upload_url: ${{ steps.create_release.outputs.upload_url }}
+         asset_path: ./Alphas.zip
+         asset_name: Aplhas_${{ env.Version }}.zip
+         asset_content_type: application/zip
