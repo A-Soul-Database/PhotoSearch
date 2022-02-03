@@ -7,6 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 21 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,7 +33,7 @@ jobs:
         run: pip install requests imagehash opencv-python distance you-get
       
       - name: runScripts
-        run: py updater.py 
+        run: python3 updater.py 
         id: version
 
       - name: CreateRelease
