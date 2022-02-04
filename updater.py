@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from contextlib import closing
 import json
 import requests
