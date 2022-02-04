@@ -62,6 +62,7 @@ for bv in Need_To_Update:
         os.system(f"echo {name} Downloaded")
 
 
+os.system(f"echo {os.listdir('./')}")
 main.HashListGen().CaucalateAll()
 
 # Create Release 
