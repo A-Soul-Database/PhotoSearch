@@ -1,7 +1,8 @@
 from contextlib import closing
-import json
+import subprocess
 import requests
 import main
+import json
 import os
 import time
 from zipfile import ZipFile
@@ -52,13 +53,14 @@ def getPs(bv):
         return []
     return [fn+1 for fn in range(len(r["data"]["pages"])) if "弹幕" not in r["data"]["pages"][fn]["part"]]
 
-for item in Need_To_Update:
-    items = getPs(item)
-    for ps in items:
-        name = item if len(items) == 1 else f"{item}-{ps}"
-        os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps} >/dev/null 2>&1 ")
+for bv in Need_To_Update:
+    pages = getPs(bv)
+    for ps in pages:
+        name = bv if len(pages) == 1 else f"{bv}-{ps}"
+        p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"  >/dev/null 2>&1 ',shell=True)
+        p.wait()
         os.system(f"echo {name} Downloaded")
-    break # Debug only
+
 
 main.HashListGen().CaucalateAll()
 
