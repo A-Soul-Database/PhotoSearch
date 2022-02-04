@@ -44,7 +44,7 @@ for _k,_v in all.items():
     if name not in Saved_Indexer: Saved_Indexer.append(name)
     
 Need_To_Update = [fn for fn in Remote_Indexer if fn not in Saved_Indexer]
-
+Need_To_Update = ["BV1M44y1j7LH"]
 os.system(f"echo Have {len(Need_To_Update)} items to update.")
 # Update Indexer
 
