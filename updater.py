@@ -1,6 +1,7 @@
+from asyncio.windows_events import NULL
 from contextlib import closing
 import json
-import zipfile
+import subprocess
 import requests
 import main
 import os
@@ -43,7 +44,9 @@ for item in Need_To_Update:
     items = getPs(item)
     for ps in items:
         name = item if len(items) == 1 else f"{item}-{ps}"
-        Video = os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps}")
+        p = subprocess.Popen(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps}",shell=True,stdout=subprocess.DEVNULL)
+        p.wait()
+    print(f"{item} Downloaded")
 
 main.HashListGen().CaucalateAll()
 

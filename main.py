@@ -70,7 +70,10 @@ class HashListGen:
             if any(fn.endswith(formats) for formats in videoFormat)
         ]
         for i in videoList:
-            self.SlpitSingleVideo(i)
+            try:
+                self.SlpitSingleVideo(i)
+            except:
+                print(f"{i} is error..pass")
         print(time.time()-start_time)
 
 
