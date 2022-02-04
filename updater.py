@@ -54,6 +54,7 @@ def getPs(bv):
         return []
     return [fn+1 for fn in range(len(r["data"]["pages"])) if "弹幕" not in r["data"]["pages"][fn]["part"]]
 
+Need_To_Update = ["BV1M44y1j7LH"]
 for bv in Need_To_Update:
     pages = getPs(bv)
     for ps in pages:
