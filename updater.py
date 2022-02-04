@@ -6,6 +6,7 @@ import json
 import os
 import time
 from zipfile import ZipFile
+
 header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
 
 Remote_Indexer = []
@@ -57,8 +58,9 @@ for bv in Need_To_Update:
     pages = getPs(bv)
     for ps in pages:
         name = bv if len(pages) == 1 else f"{bv}-{ps}"
-        p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"  >/dev/null 2>&1 ',shell=True)
+        p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"  >/dev/null 2>&1 ',shell=False)
         p.wait()
+        time.sleep(5)
         os.system(f"echo {name} Downloaded")
 
 
