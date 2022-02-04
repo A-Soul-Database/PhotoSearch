@@ -43,7 +43,7 @@ for item in Need_To_Update:
     items = getPs(item)
     for ps in items:
         name = item if len(items) == 1 else f"{item}-{ps}"
-        os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps} >> /dev/null &")
+        os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps} >/dev/null 2>&1 ")
     print(f"{item} Downloaded")
 
 main.HashListGen().CaucalateAll()
