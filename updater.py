@@ -35,6 +35,7 @@ alphas = [fn for fn in os.listdir("./Alphas") if fn.endswith(".json")]
 all = {}
 for i in alphas:
     all.update(json.loads(open(f"Alphas/{i}","r",encoding="utf-8").read()))
+
 for _k,_v in all.items():
     name = _v.split(",")[0]
     if "-" in name: name = name.split("-")[0]
@@ -56,7 +57,8 @@ for item in Need_To_Update:
     for ps in items:
         name = item if len(items) == 1 else f"{item}-{ps}"
         os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps} >/dev/null 2>&1 ")
-    os.system(f"echo {item} Downloaded")
+        os.system(f"echo {name} Downloaded")
+    break # Debug only
 
 main.HashListGen().CaucalateAll()
 

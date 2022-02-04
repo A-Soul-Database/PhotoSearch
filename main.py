@@ -65,7 +65,7 @@ class HashListGen:
 
     def CaucalateAll(self):
         start_time = time.time()
-        videoFormat = ["mp4","flv"]
+        videoFormat = [".mp4",".flv"]
         videoList = [fn for fn in os.listdir(os.getcwd())
             if any(fn.endswith(formats) for formats in videoFormat)
         ]
