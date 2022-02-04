@@ -57,6 +57,7 @@ def getPs(bv):
 Need_To_Update = ["BV1M44y1j7LH"]
 for bv in Need_To_Update:
     pages = getPs(bv)
+    os.system(f"echo {pages}")
     for ps in pages:
         name = bv if len(pages) == 1 else f"{bv}-{ps}"
         p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"  >/dev/null 2>&1 ',shell=True)
