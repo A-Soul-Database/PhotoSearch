@@ -58,12 +58,12 @@ for bv in Need_To_Update:
     pages = getPs(bv)
     for ps in pages:
         name = bv if len(pages) == 1 else f"{bv}-{ps}"
-        p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"  >/dev/null 2>&1 ',shell=False)
+        p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"  >/dev/null 2>&1 ',shell=True)
         p.wait()
         time.sleep(5)
         os.system(f"echo {name} Downloaded")
-
-
+        break
+        
 os.system(f"echo {os.listdir('./')}")
 main.HashListGen().CaucalateAll()
 
