@@ -64,8 +64,8 @@ for bv in Need_To_Update:
         p.wait()
         time.sleep(5)
         os.system(f"echo {name} Downloaded")
-        break
-        
+
+os.system(f"echo {os.path.getsize('BV1M44y1j7LH[00].mp4')} {os.path.getsize('BV1M44y1j7LH[01].mp4')}")
 os.system(f"echo {os.listdir('./')}")
 main.HashListGen().CaucalateAll()
 
