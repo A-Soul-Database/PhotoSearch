@@ -52,13 +52,16 @@ def getPs(bv):
         return []
     return [fn+1 for fn in range(len(r["data"]["pages"])) if "弹幕" not in r["data"]["pages"][fn]["part"]]
 
+debug = 0
 for item in Need_To_Update:
     items = getPs(item)
     for ps in items:
         name = item if len(items) == 1 else f"{item}-{ps}"
         os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps} >/dev/null 2>&1 ")
         os.system(f"echo {name} Downloaded")
-    break # Debug only
+    debug+=1
+    if debug > 2:
+        break
 
 main.HashListGen().CaucalateAll()
 
