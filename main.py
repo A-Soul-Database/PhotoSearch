@@ -48,7 +48,7 @@ class Search:
         start_time = time.time()
         result = {}
         to_search_hash = imagehash.phash(Image.open(f'{image}'),hash_size=Config["Hash_Size"]).__str__()
-        hashinfo = json.loads(open(f"alphas/{to_search_hash[:1]}.json","r").read())
+        hashinfo = json.loads(open(f"Alphas/{to_search_hash[:1]}.json","r").read())
         for i in hashinfo:
             distancse = int(distance.hamming(to_search_hash,i))
             if distancse < Config["Search_Distance"]:
@@ -118,11 +118,11 @@ class HashListGen:
         a = "abcdefghigklmnopqrstuvwxyz0123456789"
 
         for i in a:
-            if os.path.exists(f"alphas/{i}.json"):
-                thisdic = json.loads(open(f"alphas/{i}.json","r",encoding="utf-8").read())
+            if os.path.exists(f"Alphas/{i}.json"):
+                thisdic = json.loads(open(f"Alphas/{i}.json","r",encoding="utf-8").read())
             else:
                 thisdic = {}
-            handle = open(f"alphas/{i}.json","w",encoding="utf-8")
+            handle = open(f"Alphas/{i}.json","w",encoding="utf-8")
             for j in hash:
                 if j[:1] == i:
                     if j in thisdic:
