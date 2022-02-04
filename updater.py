@@ -60,7 +60,7 @@ for item in Need_To_Update:
         os.system(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps} >/dev/null 2>&1 ")
         os.system(f"echo {name} Downloaded")
     debug+=1
-    if debug => 2:
+    if debug > 1:
         break
 
 os.system(f"echo {os.listdir('./')}")
