@@ -8,7 +8,7 @@ import time
 from zipfile import ZipFile
 
 header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
-
+os.system("apt install -y ffmpeg")
 Remote_Indexer = []
 for i in requests.get("https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/main.json").json()["LiveClip"]:
     Remote_Indexer+=requests.get(f"https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/{i}/indexer.json").json()
@@ -54,18 +54,14 @@ def getPs(bv):
         return []
     return [fn+1 for fn in range(len(r["data"]["pages"])) if "弹幕" not in r["data"]["pages"][fn]["part"]]
 
-Need_To_Update = ["BV1M44y1j7LH"]
 for bv in Need_To_Update:
     pages = getPs(bv)
-    os.system(f"echo {pages}")
     for ps in pages:
         name = bv if len(pages) == 1 else f"{bv}-{ps}"
         p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"',shell=True,stdout=subprocess.DEVNULL)
         p.wait()
-        time.sleep(5)
         os.system(f"echo {name} Downloaded")
 
-os.system(f"echo {os.path.getsize('BV1M44y1j7LH[00].mp4')} {os.path.getsize('BV1M44y1j7LH[01].mp4')}")
 os.system(f"echo {os.listdir('./')}")
 main.HashListGen().CaucalateAll()
 
