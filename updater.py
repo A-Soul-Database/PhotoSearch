@@ -44,7 +44,7 @@ for item in Need_To_Update:
     items = getPs(item)
     for ps in items:
         name = item if len(items) == 1 else f"{item}-{ps}"
-        p = subprocess.Popen(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps}",stdout=subprocess.DEVNULL)
+        p = subprocess.Popen(f"you-get -O ./{name} --format=dash-flv360 https://www.bilibili.com/video/{item}?p={ps}",stdout=os.devnull,shell=True)
         p.wait()
     print(f"{item} Downloaded")
 
