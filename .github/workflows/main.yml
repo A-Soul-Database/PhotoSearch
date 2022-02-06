@@ -33,7 +33,8 @@ jobs:
         run: pip install requests imagehash opencv-python distance you-get
       
       - name: runScripts
-        env: Ips: ${{ secrets.Ips }}
+        env: 
+          Ips: ${{ secrets.Ips }}
         run: python3 updater.py 
         id: version
 
