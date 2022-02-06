@@ -7,6 +7,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0"/>
     <script src="./script.js"></script>
+    <meta charset="UTF-8">
 </head>
 
 <div>
@@ -59,7 +60,7 @@
                    name="file" value="选择图片">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary" onclick="Search()">搜索</button>
+            <button type="submit" class="btn btn-primary" onclick="Search()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">搜索</button>
         </div>
     </div>
 
@@ -76,5 +77,15 @@
         </div>
         <div id="Result"></div>
     </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">加载中</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
 </div>
