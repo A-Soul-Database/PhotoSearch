@@ -2,6 +2,7 @@ Host = "http://localhost:5100";
 Parse_Result = {};
 Current_Play = [];
 async function Search () {
+    myModal.show();
     let file = document.getElementById("Search_File").files;
     let reader = new FileReader();
     reader.readAsDataURL(file[0]);
@@ -34,6 +35,7 @@ async function Search () {
         document.getElementById("Result").innerHTML = Html;
         document.getElementById("container-index").style.display = "none";
         document.getElementById("container-result").style.display = "block";
+        myModal.hide();
 }
 }
 

@@ -60,7 +60,7 @@
                    name="file" value="选择图片">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary" onclick="Search()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">搜索</button>
+            <button type="submit" class="btn btn-primary" onclick="Search()">搜索</button>
         </div>
     </div>
 
@@ -86,6 +86,11 @@
       </div>
     </div>
   </div>
-  
+  <script>
+      var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
+        keyboard: false
+    })
+
+  </script>
 
 </div>
