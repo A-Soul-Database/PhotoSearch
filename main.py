@@ -60,6 +60,7 @@ class Search:
         print(dict(result))
         #print(len(dict(result)))
         print("--- %s seconds ---" % (time.time() - start_time))
+        return dict(result)
 
 class HashListGen:
 

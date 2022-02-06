@@ -6,6 +6,7 @@
             crossorigin="anonymous"></script>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0"/>
+    <script src="./script.js"></script>
 </head>
 
 <div>
@@ -14,7 +15,7 @@
         <div class="container-fluid"><a class="navbar-brand" href="#">直播图片搜索</a></div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="container-index">
         <div class="alert alert-danger d-flex align-items-center" role="alert" style="margin-top: 0.75rem">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
@@ -23,9 +24,6 @@
             <div style="padding-left: 0.5rem">
                 仅供学习使用，请勿用于商业用途。
             </div>
-        </div>
-        <div class="alert alert-info d-flex align-items-center" role="alert" style="margin-top: 0.75rem">
-            上次更新为 {{ Last_Update_Info }}
         </div>
 
         <div style="margin-top: 1rem; margin-bottom: 2rem; text-align: center;">
@@ -52,17 +50,31 @@
         <div style="margin-bottom: 2rem; text-align: center;">
             <img src="https://i.loli.net/2021/12/01/qLroIxYgnQsXPcD.png" class="img-thumbnail img-fluid" alt="">
         </div>
-        <div style="display:flex; justify-content: center">
-            <form class="row row-cols-lg-auto g-3 align-items-center" method="POST" action="/search" enctype=multipart/form-data>
-                <div class="col-12">
-                    <input type="file" class="form-control" accept="image/jpeg,image/jpg,image/png"
-                           name="file" value="选择图片">
-                </div>
 
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">提交查询</button>
-                </div>
-            </form>
+    </div>
+
+    <div style="display:flex; justify-content: center" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <input type="file" class="form-control" accept="image/jpeg,image/jpg,image/png" id="Search_File"
+                   name="file" value="选择图片">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" onclick="Search()">搜索</button>
         </div>
     </div>
+
+    <div class="container align-items-center" id="container-result" style="display: none;margin: auto;">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-outline-primary" onclick="Jump_Bili()">跳转主站</button>
+            <button type="button" class="btn btn-outline-primary" onclick="Jump_Asdb()">在Asdb中打开</button>
+          </div>
+        <div class="card" style="width: 80%;float: left;">
+            <video id="Index_Video" controls autoplay></video>
+            <div class="card-body">
+                <h5 class="card-title" id="Video_Title">Card title</h5>
+            </div>
+        </div>
+        <div id="Result"></div>
+    </div>
+
 </div>

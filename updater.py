@@ -79,3 +79,14 @@ with ZipFile("Alphas.zip","w") as zip:
     for i in os.walk("./Alphas"):
         for j in i[2]:
             zip.write(i[0]+"/"+j)
+
+# Send Webhooks
+try:
+    Webhooks = os.environ["Ips"].split("\n")
+except: Webhooks = []
+for i in Webhooks:
+    try:
+        ips,token = i.split(",")
+        requests.post(f"https://{ips}/api/v1/webhooks/update",json={"token":token})
+    except:
+        print(f"Failed to send webhook")
