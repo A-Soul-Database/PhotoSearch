@@ -8,6 +8,7 @@ import time
 from zipfile import ZipFile
 
 header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
+os.system("sudo apt-get update")
 os.system("sudo apt install -y ffmpeg")
 Remote_Indexer = []
 for i in requests.get("https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/main.json").json()["LiveClip"]:
