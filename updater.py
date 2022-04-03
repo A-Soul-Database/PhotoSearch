@@ -35,12 +35,6 @@ Need_To_Update = [fn for fn in Remote_Indexer if fn not in Saved_Indexer]
 os.system(f"echo Have {len(Need_To_Update)} items to update.")
 # Update Indexer
 
-def getPs(bv):
-    r = requests.get("https://api.bilibili.com/x/web-interface/view?bvid="+bv,headers=header).json()
-    if r["code"] == -404:
-        return []
-    return [fn+1 for fn in range(len(r["data"]["pages"])) if "弹幕" not in r["data"]["pages"][fn]["part"]]
-
 for bv in Need_To_Update:
     downloader.bilibili(bv,ASDB=True,download_sourcer=0)
 

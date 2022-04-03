@@ -9,6 +9,7 @@ def bilibili(bv:str,ASDB:bool=False,download_sourcer:int=0):
     # 1: api接口
     # 2: 音频
     headers = {"User-Agent":"Mozilla/5.0"}
+    print(bv)
     if "bilibili" in bv: bv = bv.split("/")[-1].split("?")[0]
 
     if ASDB: cids = [fn["cid"] for fn in requests.get(f"https://api.bilibili.com/x/web-interface/view?bvid={bv}",headers=headers).json()["data"]["pages"]
