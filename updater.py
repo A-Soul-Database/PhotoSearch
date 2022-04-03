@@ -6,31 +6,18 @@ import json
 import os
 import time
 from zipfile import ZipFile
+import downloader
 
 header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
-os.system("sudo apt-get update")
-os.system("sudo apt install -y ffmpeg")
+os.system("sudo apt update && apt install -y ffmpeg aria2")
+
 Remote_Indexer = []
 for i in requests.get("https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/main.json").json()["LiveClip"]:
     Remote_Indexer+=requests.get(f"https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/{i}/indexer.json").json()
 
-# Download Latest Released Aplhas
-Latest_Release =  requests.get("https://api.github.com/repos/A-Soul-Database/PhotoSearch/releases/latest",headers=header).json()
-try:
-    Latest_Release = Latest_Release["assets"][0]["browser_download_url"]
-except:
-    print(Latest_Release)
-
 os.system(f"echo Got Remote Indexer with {len(Remote_Indexer)} items.")
-
-with closing(requests.get(Latest_Release)) as r:
-    chunk_size = 10240
-    with open("Alphas.zip","wb") as f:
-        for chunk in r.iter_content(chunk_size=chunk_size):
-            f.write(chunk)
-
-Alphas = ZipFile("Alphas.zip")
-Alphas.extractall("./")
+os.system(f'aria2c -c -s 16 -x 16 -j 16 -k 1M -o ./Alphas.zip "https://github.com/A-Soul-Database/PhotoSearch/releases/download/Latest/Alphas.zip"')
+os.system("unzip Alphas.zip && rm Alphas.zip")
 
 Saved_Indexer = []
 
@@ -55,12 +42,7 @@ def getPs(bv):
     return [fn+1 for fn in range(len(r["data"]["pages"])) if "弹幕" not in r["data"]["pages"][fn]["part"]]
 
 for bv in Need_To_Update:
-    pages = getPs(bv)
-    for ps in pages:
-        name = bv if len(pages) == 1 else f"{bv}-{ps}"
-        p = subprocess.Popen(f'you-get --debug -O ./{name} --format=dash-flv360 "https://www.bilibili.com/video/{bv}?p={ps}"',shell=True,stdout=subprocess.DEVNULL)
-        p.wait()
-        os.system(f"echo {name} Downloaded")
+    downloader.bilibili(bv,ASDB=True,download_sourcer=0)
 
 os.system(f"echo {os.listdir('./')}")
 main.HashListGen().CaucalateAll()
@@ -71,15 +53,10 @@ os.system(f"echo Creating Release")
 env_file = os.getenv('GITHUB_ENV')
 times = time.time()
 with open(env_file, "a") as f:
-    f.write(f"Version={times}")
+    f.write(f"Describe=Release_In_{times}")
     f.write("\n")
-    f.write(f"Tags={times}")
 
-os.remove("Alphas.zip")
-with ZipFile("Alphas.zip","w") as zip:
-    for i in os.walk("./Alphas"):
-        for j in i[2]:
-            zip.write(i[0]+"/"+j)
+os.system("zip Alphas.zip -r Alphas/*")
 
 # Send Webhooks
 try:

@@ -3,6 +3,7 @@ imagehash
 opencv-python
 distance
 you-get
+pytz
 
 ## for server 
 fastapi
