@@ -36,7 +36,9 @@ os.system(f"echo Have {len(Need_To_Update)} items to update.")
 # Update Indexer
 
 for bv in Need_To_Update:
-    downloader.bilibili(bv,ASDB=True,download_sourcer=0)
+    try:
+        downloader.bilibili(bv,ASDB=True,download_sourcer=0)
+    except: ...
 
 os.system(f"echo {os.listdir('./')}")
 main.HashListGen().CaucalateAll()
