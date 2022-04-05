@@ -16,7 +16,7 @@ for i in requests.get("https://raw.githubusercontent.com/A-Soul-Database/A-Soul-
     Remote_Indexer+=requests.get(f"https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/{i}/indexer.json").json()
 
 os.system(f"echo Got Remote Indexer with {len(Remote_Indexer)} items.")
-os.system(f'aria2c -c -s 16 -x 16 -j 16 -k 1M -o ./Alphas.zip "https://github.com/A-Soul-Database/PhotoSearch/releases/download/Latest/Alphas.zip"')
+os.system(f'aria2c -c -s 16 -x 16 -j 16 -k 1M -o ./Alphas.zip "https://github.com/A-Soul-Database/PhotoSearch/releases/download/latest/Alphas.zip"')
 os.system("unzip Alphas.zip && rm Alphas.zip")
 
 Saved_Indexer = []
