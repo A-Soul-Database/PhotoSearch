@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-python@v2.3.1
         
       - name: Install Dependiences
-        run: pip install imagehash opencv-python distance pytz
+        run: pip install wheel imagehash opencv-python distance pytz requests
       
       - name: runScripts
         env: 
