@@ -7,6 +7,7 @@ import os
 import time
 from zipfile import ZipFile
 import downloader
+import datetime
 
 header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
 os.system("sudo apt update && apt install -y ffmpeg aria2")
@@ -47,9 +48,10 @@ main.HashListGen().CaucalateAll()
 os.system(f"echo Creating Release")
 
 env_file = os.getenv('GITHUB_ENV')
-times = time.time()
+tz = pytz.timezone('Asia/Shanghai')
+date = datetime.datetime.now(tz).strftime("%Y.%m.%d_%H/%M")
 with open(env_file, "a") as f:
-    f.write(f"Describe=Release_In_{times}")
+    f.write(f"Describe=Release_In_{date}(UTC + 8)")
     f.write("\n")
 
 os.system("zip Alphas.zip -r Alphas/*")
