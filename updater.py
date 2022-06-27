@@ -9,13 +9,23 @@ from zipfile import ZipFile
 import downloader
 import datetime
 import pytz
+import shutil
 
 header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
 os.system("sudo apt update && apt install -y ffmpeg aria2")
+os.system("git clone https://github.com/A-Soul-Database/Asdb-Tools.git 1")
+shutil.move("./1/AsdbTools","./AsdbTools")
+os.system("sudo pip install -r ./1/requirements.txt")
 
 Remote_Indexer = []
+from AsdbTools import Monitors
+Remote_Indexer = Monitors.Diff()["data"]
+"""
+# This Method Get Bvs From Asdb
 for i in requests.get("https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/main.json").json()["LiveClip"]:
     Remote_Indexer+=requests.get(f"https://raw.githubusercontent.com/A-Soul-Database/A-Soul-Data/main/db/{i}/indexer.json").json()
+"""
+
 
 os.system(f"echo Got Remote Indexer with {len(Remote_Indexer)} items.")
 os.system(f'aria2c -c -s 16 -x 16 -j 16 -k 1M -o ./Alphas.zip "https://github.com/A-Soul-Database/PhotoSearch/releases/download/latest/Alphas.zip"')
