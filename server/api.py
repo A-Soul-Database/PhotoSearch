@@ -16,7 +16,7 @@ Outer_App = FastAPI()
 
 Outer_App.add_middleware(
     CORSMiddleware,
-    allow_origins="http://localhost",
+    allow_origins="*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -62,7 +62,7 @@ def update(tk:Token):
         Only Allow Certain Token.
     """
     try:
-        assert os.getenv("Photo_Api_Token") == tk.token
+        assert os.getenv("Photo_Api_Token") == str(tk.token)
         Thread(target=Do_Update).start()
         return {"code":0,"msg":"Update Start"}
     except: return {"code":1,"msg":"Token Error"}
@@ -88,14 +88,11 @@ def Parse(bv:str,p:int):
 
 def Do_Update():
     Start_Time = time.time()
+    time.sleep(60)
     Last_Release_Info = requests.get("https://api.github.com/repos/A-Soul-Database/PhotoSearch/releases/latest").json()["assets"][0]["browser_download_url"]
-    while True:
-        time.sleep(5)
-        r = requests.get("https://api.github.com/repos/A-Soul-Database/PhotoSearch/releases/latest").json()["assets"][0]["browser_download_url"]
-        if  r!= Last_Release_Info: break
-        if time.time()-Start_Time > 300: raise TimeoutError("Timeout")
+    if time.time()-Start_Time > 300: raise TimeoutError("Timeout")
     
-    with closing(requests.get(r)) as rep:
+    with closing(requests.get(Last_Release_Info)) as rep:
         chunk_size = 10240
         with open("Alphas.zip","wb") as f:
             for chunk in rep.iter_content(chunk_size=chunk_size):

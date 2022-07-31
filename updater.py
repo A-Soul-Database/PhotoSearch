@@ -69,11 +69,6 @@ os.system("zip Alphas.zip -r Alphas/*")
 
 # Send Webhooks
 try:
-    Webhooks = os.environ["Ips"].split("\n")
-except: Webhooks = []
-for i in Webhooks:
-    try:
-        ips,token = i.split(",")
-        requests.post(f"https://{ips}/api/v1/webhooks/update",json={"token":token})
-    except:
-        print(f"Failed to send webhook")
+    print(requests.post("https://apihk.asdb.live/photo/api/v1/webhooks/update" , json={"token":os.getenv('APITOKEN')}))
+except:
+    print("Webhook error")

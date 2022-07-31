@@ -33,8 +33,8 @@ jobs:
         run: pip install wheel imagehash opencv-python distance pytz requests
       
       - name: runScripts
-        env: 
-          Ips: ${{ secrets.Ips }}
+        env:
+          APITOKEN: ${{ secrets.APITOKEN }} 
         run: python3 updater.py 
         id: version
 
