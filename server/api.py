@@ -43,7 +43,7 @@ def b64_2_img(b64):
         f.write(base64.b64decode(content))
     return name,types
 
-@Outer_App.post("/api/v1/search")
+@Outer_App.post("/photo/api/v1/search")
 async def search(item: B64):
     """
         Search a photo.
@@ -55,7 +55,7 @@ async def search(item: B64):
         return result
     except: return "error"
 
-@Outer_App.post("/api/v1/webhooks/update")
+@Outer_App.post("/photo/api/v1/webhooks/update")
 def update(tk:Token):
     """
         Do Update Alpha.
@@ -67,14 +67,14 @@ def update(tk:Token):
         return {"code":0,"msg":"Update Start"}
     except: return {"code":1,"msg":"Token Error"}
 
-@Outer_App.get("/api/v1/LastUpdate")
+@Outer_App.get("/photo/api/v1/LastUpdate")
 def Get_Last_Update():
     """
         Get Last Update Time.
     """
     return {"code":0,"msg":"ok","data":{"last_update":Last_Update}}
 
-@Outer_App.get("/api/v1/ParseVideo")
+@Outer_App.get("/photo/api/v1/ParseVideo")
 def Parse(bv:str,p:int):
     try:
         header = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
