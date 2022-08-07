@@ -1,4 +1,4 @@
-Host = "http://47.93.157.77/photo";
+Host = "https://apihk.asdb.live/photo";
 Parse_Result = {};
 Current_Play = [];
 async function Search () {
